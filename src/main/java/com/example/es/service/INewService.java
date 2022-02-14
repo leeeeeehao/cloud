@@ -16,6 +16,6 @@ public interface INewService {
 
     void insert(New n);
 
-    Integer bulkInsert
+    Integer bulkInsert(List<New> news);
 
 }

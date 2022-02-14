@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -39,6 +41,32 @@ class EsApplicationTests {
                 .newState(1)
                 .createTime(new Date())
                 .build());
+    }
+
+    @Test
+    void batchInsert() {
+        List<New> newList = new ArrayList<>();
+        New new1 = New
+                .builder()
+                .id(UUID.randomUUID().toString())
+                .newTitle("吃着韭菜盒子 谷爱凌闯进明日决赛")
+                .newContent("由于要备战明天的决赛，谷爱凌还要进行训练。这一次她没有太多时间去接受采访，匆匆走过混合采访区时，有人询问她刚才吃的是什么？谷爱凌说了四个字——“韭菜盒子”。对于外国朋友，甚至是一些南方朋友，可能对于“韭菜盒子”感到陌生，需要解释一番才能明白。对于北京人来说，韭菜盒子是一道最常见的家常美食，几乎所有人都吃过，说着一口的京腔，吃着韭菜盒子，谷爱凌真是地道的“北京大妞”。")
+                .newState(1)
+                .newType(1)
+                .createTime(new Date())
+                .build();
+        newList.add(new1);
+        New new2 = New
+                .builder()
+                .id(UUID.randomUUID().toString())
+                .newTitle("三部委公布第二轮“双一流”建设高校及建设学科名单")
+                .newContent("中国青年报客户端北京2月14日电（中青报·中青网记者 叶雨婷）记者今天从教育部获悉，经专家委员会认定，教育部、财政部、国家发展改革委研究并报国务院批准，第二轮“双一流”建设高校及建设学科名单和给予公开警示的首轮建设学科名单公布。")
+                .newState(1)
+                .newType(1)
+                .createTime(new Date())
+                .build();
+        newList.add(new2);
+        iNewService.bulkInsert(newList);
     }
 
 }

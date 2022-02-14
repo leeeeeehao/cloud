@@ -6,6 +6,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.example.es.config.RestClientConfig;
 import com.example.es.entity.New;
 import com.example.es.service.INewService;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -76,12 +77,30 @@ public class NewServiceImpl implements INewService {
         String source = JSON.toJSONString(n);
         try {
             indexRequest.source(source, XContentType.JSON);
-            IndexResponse res =  restHighLevelClient.index(indexRequest, RestClientConfig.COMMON_OPTIONS);
+            IndexResponse res = restHighLevelClient.index(indexRequest, RestClientConfig.COMMON_OPTIONS);
             System.out.printf("");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public Integer bulkInsert(List<New> news) {
+        BulkRequest bulkRequest = new BulkRequest();
+        news.stream().forEach(item -> {
+            String source = JSON.toJSONString(item);
+            bulkRequest.add(new IndexRequest("news").source(source, XContentType.JSON));
+        });
+        addBatch(bulkRequest);
+        return null;
+    }
+
+    public void addBatch(BulkRequest bulkRequest) {
+        try {
+            restHighLevelClient.bulk(bulkRequest, RestClientConfig.COMMON_OPTIONS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
