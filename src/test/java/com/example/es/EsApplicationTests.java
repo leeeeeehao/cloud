@@ -1,6 +1,7 @@
 package com.example.es;
 
 import com.alibaba.fastjson.JSON;
+import com.example.es.entity.BasePage;
 import com.example.es.entity.New;
 import com.example.es.service.INewService;
 import org.junit.jupiter.api.Test;
@@ -67,6 +68,16 @@ class EsApplicationTests {
                 .build();
         newList.add(new2);
         iNewService.bulkInsert(newList);
+    }
+
+    @Test
+    void checkIndex() {
+        System.out.printf(iNewService.checkIndex("news") + "");
+    }
+
+    @Test
+    void page() {
+        System.out.printf(JSON.toJSONString(iNewService.getPage(BasePage.builder().page(1).size(2).build(), "news", New.builder().newTitle("新闻").build())));
     }
 
 }
