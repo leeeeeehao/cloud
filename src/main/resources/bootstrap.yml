@@ -1,0 +1,23 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: cloud-elasticsearch
+  cloud:
+    nacos:
+      config:
+        # 配置文件的环境
+        group: ${spring.profiles.active}
+        # 配置文件的格式
+        file-extension: yml
+        # 配置中心的地址
+        server-addr: 121.5.228.158:8848
+        # 配置文件prefix
+        prefix: ${spring.application.name}
+      discovery:
+        server-addr: 121.5.228.158:8848
+        group: ${spring.profiles.active}
+
+  profiles:
+    active: dev
