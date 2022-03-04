@@ -1,7 +1,7 @@
 package com.example.es.shardingjdbc;
 
 import cn.hutool.core.date.DateUtil;
-import org.apache.shardingsphere.api.sharding.standard.PreciseShardingAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
 
 import java.util.Collection;
@@ -13,12 +13,13 @@ import java.util.Date;
  * Time: 18:17
  * Description:
  */
-public class YearMonthShardingAlgorithm implements PreciseShardingAlgorithm<Date> {
+@Slf4j
+public class YearMonthShardingAlgorithm extends ShardingAlgorithmTool<Date> {
 
     @Override
-    public String doSharding(Collection<String> collection, PreciseShardingValue<Date> shardingValue) {
-        String tbName = shardingValue.getLogicTableName() + "_" + DateUtil.format(shardingValue.getValue(),"yyyy_MM");
-        System.out.println("Sharding input:" + shardingValue.getValue() + ", output:{}" + tbName);
-        return tbName;
+    public String doSharding(Collection<String> collection, PreciseShardingValue<Date> preciseShardingValue) {
+        log.info("逻辑表名:{},逻辑键:{},逻辑键值{}", preciseShardingValue.getLogicTableName(), preciseShardingValue.getColumnName(), preciseShardingValue.getValue());
+        return shardingTablesCheckAndCreatAndReturn(preciseShardingValue.getLogicTableName(), preciseShardingValue.getLogicTableName() + DateUtil.format(preciseShardingValue.getValue(), "yyyyMM"));
     }
+
 }

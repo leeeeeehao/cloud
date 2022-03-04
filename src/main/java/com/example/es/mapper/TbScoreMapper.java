@@ -3,6 +3,7 @@ package com.example.es.mapper;
 import com.example.es.entity.TbScore;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * User: Leehao
@@ -13,7 +14,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TbScoreMapper {
 
-    @Insert("insert into tb_score(userid,subject,score) values(#{userId},#{subject},#{score})")
+    @Insert("insert into tb_score(userid,subject,score,create_time) values(#{userId},#{subject},#{score},#{createTime}})")
     void addUser(TbScore tbScore);
 
+    @Select("select count(1) from tb_score")
+    Integer count();
 }

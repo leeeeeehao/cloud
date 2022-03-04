@@ -5,28 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * User: Leehao
- * Date: 2022/3/3
- * Time: 17:03
+ * Date: 2022/3/4
+ * Time: 11:21
  * Description:
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TbScore {
+public class CreateTableSql {
 
-    private Integer id;
+    private String table;
 
-    private String userId;
-
-    private String subject;
-
-    private Integer score;
-
-    private Date createTime;
+    private String createTable;
 
 }

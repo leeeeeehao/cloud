@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,14 +28,28 @@ class ShardingTest {
     }
 
     @Test
-    void insertTest(){
-        TbScore tbScore = TbScore
-                .builder()
-                .userId("213")
-                .score(51)
-                .subject("数学")
-                .build();
-        tbScoreMapper.addUser(tbScore);
+    void insertTest() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr = "2022-01-14 00:00:00";
+
+        try {
+            Date date = format.parse(dateStr);
+
+            TbScore tbScore = TbScore
+                    .builder()
+                    .userId("213")
+                    .score(51)
+                    .subject("数学")
+                    .createTime(date)
+                    .build();
+            tbScoreMapper.addUser(tbScore);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
+    @Test
+    void selectCount() {
+        System.out.printf(tbScoreMapper.count() + "");
+    }
 }
