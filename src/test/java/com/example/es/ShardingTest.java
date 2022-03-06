@@ -30,7 +30,7 @@ class ShardingTest {
     @Test
     void insertTest() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateStr = "2022-01-14 00:00:00";
+        String dateStr = "2022-02-14 00:00:00";
 
         try {
             Date date = format.parse(dateStr);
