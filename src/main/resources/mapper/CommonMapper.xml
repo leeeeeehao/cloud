@@ -8,12 +8,7 @@
     </resultMap>
 
     <select id="getAllTableNameBySchema" resultType="java.lang.String">
-        SELECT
-            table_name
-        FROM
-            information_schema.TABLES
-        WHERE
-                TABLE_SCHEMA = ${schema}
+        SHOW TABLES
     </select>
 
     <select id="selectTableCreateSql" resultMap="selectTableCreateSqlResultMap">
