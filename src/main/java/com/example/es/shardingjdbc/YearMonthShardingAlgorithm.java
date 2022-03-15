@@ -1,10 +1,11 @@
 package com.example.es.shardingjdbc;
 
-import cn.hutool.core.date.DateUtil;
 import com.example.es.util.ShardingUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.api.sharding.standard.PreciseShardingAlgorithm;
-import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
+import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Date;
@@ -16,7 +17,8 @@ import java.util.Date;
  * Description:
  */
 @Slf4j
-public class YearMonthShardingAlgorithm implements PreciseShardingAlgorithm<Date> {
+@Component
+public class YearMonthShardingAlgorithm implements StandardShardingAlgorithm<Date> {
 
     @Override
     public String doSharding(Collection<String> collection, PreciseShardingValue<Date> preciseShardingValue) {
@@ -33,4 +35,18 @@ public class YearMonthShardingAlgorithm implements PreciseShardingAlgorithm<Date
         throw new IllegalArgumentException("未找到匹配的数据表");
     }
 
+    @Override
+    public Collection<String> doSharding(Collection<String> collection, RangeShardingValue<Date> rangeShardingValue) {
+        return null;
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public String getType() {
+        return null;
+    }
 }

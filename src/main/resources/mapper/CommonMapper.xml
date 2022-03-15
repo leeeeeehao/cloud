@@ -8,11 +8,12 @@
     </resultMap>
 
     <select id="getAllTableNameBySchema" resultType="java.lang.String">
-        SELECT TABLES.TABLE_NAME
+        SELECT
+            table_name
         FROM
-            db0.information_schema.TABLES
+            information_schema.TABLES
         WHERE
-            TABLES.TABLE_SCHEMA = 'test_db'
+                TABLE_SCHEMA = ${schema}
     </select>
 
     <select id="selectTableCreateSql" resultMap="selectTableCreateSqlResultMap">

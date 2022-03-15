@@ -14,9 +14,9 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface TbScoreMapper {
 
-    @Insert("insert into tb_score(userid,subject,score,create_time) values(#{userId},#{subject},#{score},#{createTime}})")
+    @Insert("insert into tb_score(userid,subject,score,create_time) values(#{userId},#{subject},#{score},#{createTime})")
     void addUser(TbScore tbScore);
 
-    @Select("select count(1) from tb_score")
+    @Select("SELECT count from (select count(1) as count from tb_score) data ")
     Integer count();
 }
