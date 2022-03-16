@@ -1,6 +1,7 @@
 package com.example.es.mapper;
 
 import com.example.es.entity.TbScore;
+import com.example.es.vo.AcrossDbSelect;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,4 +22,10 @@ public interface TbScoreMapper {
 
     @Select("SELECT COUNT(*) from tb_score")
     Integer count();
+
+    @Select("select ts.*,ui.username as userName from tb_score ts left JOIN user_info ui on ts.userid = ui.id")
+    List<AcrossDbSelect> acrossDbSelect();
+
+    @Select("SELECT count(count2) FROM (select COUNT(0) as count2,subject from tb_score ts GROUP BY `subject`) data group by data.subject,count2")
+    List<Integer> subQuerySelect();
 }

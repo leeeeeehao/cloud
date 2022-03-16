@@ -1,11 +1,13 @@
 package com.example.es.controller;
 
+import com.example.es.entity.TbScore;
 import com.example.es.handler.DynamicTablesHandler;
 import com.example.es.mapper.TbScoreMapper;
+import com.example.es.vo.AcrossDbSelect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * User: Leehao
@@ -24,7 +26,7 @@ public class TestController {
     private TbScoreMapper tbScoreMapper;
 
     @GetMapping("/actualTablesRefresh")
-    public void actualTablesRefreshTest(){
+    public void actualTablesRefreshTest() {
         try {
             dynamicTablesHandler.CreateWcTableJobHandler();
         } catch (Exception e) {
@@ -33,8 +35,35 @@ public class TestController {
     }
 
     @GetMapping("/selectCount")
-    public void selectCount(){
+    public void selectCount() {
         tbScoreMapper.count();
+    }
+
+    /**
+     * 分表测试
+     * @param tbScore
+     */
+    @PostMapping("/shardingInsert")
+    public void shardingInsert(@RequestBody TbScore tbScore) {
+        tbScoreMapper.addUser(tbScore);
+    }
+
+    /**
+     * 跨库查询测试
+     * @return
+     */
+    @PostMapping("/acrossDbSelect")
+    public List<AcrossDbSelect> acrossDbSelect(){
+        return tbScoreMapper.acrossDbSelect();
+    }
+
+    /**
+     * 子查询测试
+     * @return
+     */
+    @GetMapping("/subQuerySelect")
+    public List<Integer> subQuerySelect(){
+        return tbScoreMapper.subQuerySelect();
     }
 
 }

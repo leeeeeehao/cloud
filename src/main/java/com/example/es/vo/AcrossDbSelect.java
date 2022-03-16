@@ -1,4 +1,4 @@
-package com.example.es.entity;
+package com.example.es.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -9,17 +9,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-/**
- * User: Leehao
- * Date: 2022/3/3
- * Time: 17:03
- * Description:
- */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TbScore {
+public class AcrossDbSelect {
 
     private Integer id;
 
@@ -29,8 +23,13 @@ public class TbScore {
 
     private Integer score;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
+
+    /**
+     * 用户名称
+     */
+    private String userName;
 
 }

@@ -219,30 +219,34 @@ public class DynamicTablesHandler {
                 }
                 Set<String> actualTables = Sets.newHashSet();
                 Map<DataNode, Integer> dataNodeIntegerMap = Maps.newHashMap();
+                Map<String, Collection<String>> datasourceToTablesMap = Maps.newHashMap();
                 AtomicInteger a = new AtomicInteger(0);
                 newDataNodes.forEach((dataNode -> {
                     actualTables.add(dataNode.getTableName());
-                    if (a.intValue() == 0){
+                    if (a.intValue() == 0) {
                         a.incrementAndGet();
                         dataNodeIntegerMap.put(dataNode, 0);
-                    }else {
+                    } else {
                         dataNodeIntegerMap.put(dataNode, a.intValue());
                         a.incrementAndGet();
                     }
+                    datasourceToTablesMap.put(dataSourceName, actualTables);
                 }));
+
                 //动态刷新：actualTables
                 Field actualTablesField = TableRule.class.getDeclaredField("actualTables");
                 actualTablesField.setAccessible(true);
                 actualTablesField.set(tableRule, actualTables);
                 //动态刷新: actualDataNodesField
                 actualDataNodesField.set(tableRule, newDataNodes);
-//                actualDataNodesField.set(tableRule, newDataNodes);
-                //动态刷新：dataNodeIndexMap
+                //动态刷新：dataNodeIndexMapField
                 Field dataNodeIndexMapField = TableRule.class.getDeclaredField("dataNodeIndexMap");
                 dataNodeIndexMapField.setAccessible(true);
                 dataNodeIndexMapField.set(tableRule, dataNodeIntegerMap);
-                Field datasourceToTablesMap = TableRule.class.getDeclaredField("datasourceToTablesMap");
-//                datasourceToTablesMap.set(tableRule,);
+                //动态刷新 datasourceToTablesMapField
+                Field datasourceMap = TableRule.class.getDeclaredField("datasourceToTablesMap");
+                datasourceMap.setAccessible(true);
+                datasourceMap.set(tableRule, datasourceToTablesMap);
             }
         } catch (Exception e) {
             e.printStackTrace();
